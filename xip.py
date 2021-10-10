@@ -46,7 +46,7 @@ def laske_tiiviste_b(teksti, tekstipalaute, debug=False):
     return laske_tiiviste(teksti, False, debug)
 
 
-def testaa_tiivisteet(eka_tiiviste, toka_tiiviste):
+def testaa_tiivisteet(eka_tiiviste, toka_tiiviste, debug=False):
         
     # Testataan että funktiolle annetut argumentit ovat oikeaa tieto typpiä
     assert isinstance(eka_tiiviste, bytes), "Ensimmäiseksi annettu tiiviste pitää olla tavumuodossa"
@@ -64,9 +64,10 @@ def testaa_tiivisteet(eka_tiiviste, toka_tiiviste):
         
     # Lasketaan ykkösbittien määrä
     tiiviste_bittien_ero = bin(ero).count('1')
-        
-    # Näytetään tiivisteiden ero
-    print("Eroa tiivisteiden välillä on " + str(tiiviste_bittien_ero) + " bittiä")
+    
+    if debug:
+	# Näytetään tiivisteiden ero
+        print("Eroa tiivisteiden välillä on " + str(tiiviste_bittien_ero) + " bittiä")
         
     # Palautetaan tiivisteiden ero vielä numerona
     return tiiviste_bittien_ero
