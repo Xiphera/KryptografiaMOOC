@@ -42,8 +42,34 @@ def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
     else:
         return sha256tiivistefunktio.digest()
 
+def laske_tiiviste_b(teksti, tekstipalaute, debug=False):
+    return laske_tiiviste(teksti, False, debug)
 
 
+def testaa_tiivisteet(eka_tiiviste, toka_tiiviste):
+        
+    # Testataan että funktiolle annetut argumentit ovat oikeaa tieto typpiä
+    assert isinstance(eka_tiiviste, bytes), "Ensimmäiseksi annettu tiiviste pitää olla tavumuodossa"
+    assert isinstance(toka_tiiviste,bytes), "Toiseksi annettu tiiviste pitää olla tavumuodossa"
+     
+    # Testataan että tiivisteet ovat yhtä pitkiä
+    assert len(eka_tiiviste)==len(toka_tiiviste), "Tiivisteet ovat erimittaisia, näitä ei voi testata"
+
+    # Muunnetaan tavumuotoinen tiiviste etumerkittömäksi 256 bittiseksi kokonaisluvuksi
+    eka_lukuna = int.from_bytes(eka_tiiviste, byteorder='big')
+    toka_lukuna = int.from_bytes(toka_tiiviste, byteorder='big')
+        
+    # Lasketaan XOR, "ero"-luvussa jokainen '1'-bitti tarkoittaa että alkuperäisten tiivisteiden bitit olivat eri
+    ero = eka_lukuna^toka_lukuna
+        
+    # Lasketaan ykkösbittien määrä
+    tiiviste_bittien_ero = bin(ero).count('1')
+        
+    # Näytetään tiivisteiden ero
+    print("Eroa tiivisteiden välillä on " + str(tiiviste_bittien_ero) + " bittiä")
+        
+    # Palautetaan tiivisteiden ero vielä numerona
+    return tiiviste_bittien_ero
 
 def salaa_merkeittäin(viesti=None, avain=0x6A, debugging=False):
     if viesti is None:
