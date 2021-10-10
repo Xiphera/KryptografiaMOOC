@@ -14,6 +14,38 @@ import warnings
 from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
+import hashlib
+
+def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
+
+    # Testataan että annettu teksti on todellakin tekstimuotoinen
+    assert isinstance(teksti,str), "Anna tiivistefunktiolle merkkijono!"
+
+    # Muunnetaan merkkijono tavujonoksi:
+    tavuviesti = teksti.encode()
+
+    # Otetaan käyttöön SHA256 tiivistefunktio-olio, tästä puhumme seuraavissa kappaleissa
+    sha256tiivistefunktio = hashlib.sha256()
+
+    # Lasketaan tiiviste
+    sha256tiivistefunktio.update(tavuviesti)
+
+    # Muunnetaan tiiviste etumerkittömäksi 256 bittiseksi kokonaisluvuksi
+    oikea_tiiviste_tavuina = sha256tiivistefunktio.digest()
+    oikea_tiiviste_lukuna  = int.from_bytes(oikea_tiiviste_tavuina, byteorder='big')
+
+    if debug:
+        # Näytetään teksti ja tiiviste heksana
+        print("Teksti oli               :",teksti)
+        print("Laskettu tiiviste heksana:", sha256tiivistefunktio.hexdigest())
+
+    # Palautetaan tiiviste joko heka-stringinä tai sitten bytenä
+    if tekstipalaute:
+        return sha256tiivistefunktio.hexdigest()
+    else:
+        return sha256tiivistefunktio.digest()
+
+
 
 
 def salaa_merkeittäin(viesti=None, avain=0x6A, debugging=False):
