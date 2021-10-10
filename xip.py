@@ -42,8 +42,8 @@ def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
     else:
         return sha256tiivistefunktio.digest()
 
-def laske_tiiviste_b(teksti, tekstipalaute, debug=False):
-    return laske_tiiviste(teksti, False, debug)
+def b_laske_tiiviste(teksti, tekstipalaute=False, debug=False):
+    return laske_tiiviste(teksti, tekstipalaute, debug)
 
 
 def testaa_tiivisteet(eka_tiiviste, toka_tiiviste, debug=False):
