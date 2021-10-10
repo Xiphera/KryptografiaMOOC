@@ -7,9 +7,6 @@ from numpy import binary_repr
 import matplotlib.pyplot as plt
 import pprint
 from scipy.interpolate import interp1d
-from statsmodels.graphics.tsaplots import plot_acf
-from statsmodels.graphics.tsaplots import plot_pacf
-import statsmodels.api as sm
 import warnings
 from datetime import date
 from datetime import datetime
