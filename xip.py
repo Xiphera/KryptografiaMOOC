@@ -13,6 +13,14 @@ from datetime import datetime
 from dateutil import relativedelta
 import hashlib
 
+
+def alusta_t421():
+    # Luo Bobin viestin Alicelle
+    salakirjoitus="PFQÄFÄFDCLCSSTGSEFJQJJLNSJCSNSTDMMEQHSHHMVXTESHSD\
+    CSSPSTDQHHSHLEPSHSHHMÅSVXTNSEPSDCQQJSVCMQDQDSSRLDDSSTDLJJ\
+    SQDLTPQTXLVRFCCSQDQTLCCXÅMVJSÖQRLCXXTHFJPLTNQQHFTÖXXDCXJS\
+    MSTCSQSSPMTSPQCXPQLJCXDQTXFJLCCLENLQDQTSJQGL" 
+
 def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
 
     # Testataan että annettu teksti on todellakin tekstimuotoinen
