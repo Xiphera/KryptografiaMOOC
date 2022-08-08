@@ -21,6 +21,7 @@ def alusta_t421():
     SQDLTPQTXLVRFCCSQDQTLCCXÅMVJSÖQRLCXXTHFJPLTNQQHFTÖXXDCXJS\
     MSTCSQSSPMTSPQCXPQLJCXDQTXFJLCCLENLQDQTSJQGL" 
 
+
 def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
 
     # Testataan että annettu teksti on todellakin tekstimuotoinen
