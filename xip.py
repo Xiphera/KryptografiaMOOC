@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-15T12:43:10+03:00
+# @Last modified time: 2022-08-15T13:19:28+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -24,6 +24,13 @@ from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
 import hashlib
+
+
+def alusta_t432():
+    # Varuiksi luodaan aiemmin tehdyt muuttujat
+    teksti = lue_tiedosto_merkkijonoksi(5)
+    laatija = "Mats Löfström suomi"
+    return teksti, laatija
 
 
 def alusta_t421():
