@@ -455,7 +455,7 @@ def vertaa_selväkieli_salakieli(selväteksti, salateksti, otsikko="Ei otsikkoa"
 
     x = np.arange(len(aakkoset))
 
-    fig, ax = plt.subplots(figsize=(16, 6))
+    fig, ax = plt.subplots(figsize=(16, 6), edgecolor="black", linewidth=2)
     plt.bar(x-0.2, selvä_pros, width=0.4, ls='dotted', lw=3, fc=(0, 0, 1, 0.5), label="Selväteksti")
     plt.bar(x+0.2, sala_pros,  width=0.4, ls='dotted', lw=3, fc=(1, 0, 0, 0.5), label="Salateksti")
 
