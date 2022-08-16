@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-16T09:48:52+03:00
+# @Last modified time: 2022-08-16T13:11:38+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -28,7 +28,7 @@ import hashlib
 
 def alusta_t432():
     # Varuiksi luodaan aiemmin tehdyt muuttujat
-    teksti = lue_tiedosto_merkkijonoksi(5)
+    teksti = lue_tiedosto_merkkijonoksi(4)
     laatija = "Mats Löfström suomi"
     return teksti, laatija
 
@@ -444,6 +444,7 @@ def suomi():
         "Z": 0.0
     }
     return sanakirja
+
 
 def show_kirjainjakauma(kirjaimet=None, osuus=None, nimi=None, vain_aineisto=False, savefile=False):
     s_kirjaimet = ('A', 'I', 'T', 'N', 'E', 'S', 'L', 'O', 'K', 'U', 'Ä', 'M', 'V',
