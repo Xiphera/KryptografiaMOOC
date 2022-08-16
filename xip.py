@@ -445,45 +445,6 @@ def suomi():
     }
     return sanakirja
 
-
-def vertaa_selväkieli_salakieli(selväteksti, salateksti, otsikko="Ei otsikkoa", kurvi=False):
-
-    aakkoset, _ = merkistot(suomi=True)
-
-    selvä_pros = list(frekvenssi_prosenteiksi(tuota_frekvenssit(selväteksti), selväteksti).values())
-    sala_pros = list(frekvenssi_prosenteiksi(tuota_frekvenssit(salateksti), salateksti).values())
-
-    x = np.arange(len(aakkoset))
-
-    fig, ax = plt.subplots(figsize=(16, 6), edgecolor="black", linewidth=2)
-    plt.bar(x-0.2, selvä_pros, width=0.4, ls='dotted', lw=3, fc=(0, 0, 1, 0.5), label="Selväteksti")
-    plt.bar(x+0.2, sala_pros,  width=0.4, ls='dotted', lw=3, fc=(1, 0, 0, 0.5), label="Salateksti")
-
-    for i, v in enumerate(selvä_pros):
-        ax.text(i-0.5, v + 0.1, str(v), color='blue', alpha=0.7, fontweight='bold')
-
-    for i, v in enumerate(sala_pros):
-        ax.text(i-0.5, v + 0.1, str(v), color='red', alpha=0.7, fontweight='bold')
-
-    x_labels = list(aakkoset)
-    plt.xticks(x, x_labels)
-
-    plt.ylabel("Esiintymistiheys", fontsize=18)
-    plt.xlabel("Kirjain", fontsize=18)
-    plt.legend()
-    plt.title("Selvä vs Sala: {}".format(otsikko), fontsize=20)
-
-    if kurvi:
-        f1 = interp1d(x, np.array(selvä_pros), kind='cubic')
-        f2 = interp1d(x, np.array(sala_pros), kind='cubic')
-
-        xnew = np.linspace(x.min(), x.max(), num=600, endpoint=True)
-        plt.plot(xnew, f1(xnew), '-', xnew, f2(xnew), '--')
-        plt.legend(['Selvä', 'Sala'], loc='best')
-
-    plt.show()
-
-
 def show_kirjainjakauma(kirjaimet=None, osuus=None, nimi=None, vain_aineisto=False, savefile=False):
     s_kirjaimet = ('A', 'I', 'T', 'N', 'E', 'S', 'L', 'O', 'K', 'U', 'Ä', 'M', 'V',
                    'R', 'J', 'H', 'Y', 'P', 'D', 'Ö', 'G', 'B', 'F', 'C', 'W', 'Å', 'Q', 'X', 'Z')
@@ -778,7 +739,7 @@ def vertaa_selväkieli_salakieli(selväteksti, salateksti="", otsikko=None, kurv
 
     x = np.arange(len(aakkoset))
 
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(16, 12))
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(16, 12), edgecolor="black", linewidth=4)
 
     x_siirros = 0
 
