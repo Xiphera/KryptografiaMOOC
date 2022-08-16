@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-16T13:11:38+03:00
+# @Last modified time: 2022-08-16T15:47:33+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -446,7 +446,7 @@ def suomi():
     return sanakirja
 
 
-def show_kirjainjakauma(kirjaimet=None, osuus=None, nimi=None, vain_aineisto=False, savefile=False):
+def näytä_kirjainjakauma(kirjaimet=None, osuus=None, nimi=None, vain_aineisto=False, savefile=False):
     s_kirjaimet = ('A', 'I', 'T', 'N', 'E', 'S', 'L', 'O', 'K', 'U', 'Ä', 'M', 'V',
                    'R', 'J', 'H', 'Y', 'P', 'D', 'Ö', 'G', 'B', 'F', 'C', 'W', 'Å', 'Q', 'X', 'Z')
     s_osuus = [11.9, 10.64, 9.77, 8.67, 8.21, 7.85, 5.68, 5.34, 5.24, 5.06, 4.59, 3.30, 2.52,
