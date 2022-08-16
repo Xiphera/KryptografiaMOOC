@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-15T13:19:28+03:00
+# @Last modified time: 2022-08-16T09:48:52+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -829,7 +829,7 @@ def vertaa_selväkieli_salakieli(selväteksti, salateksti="", otsikko=None, kurv
     plt.show()
 
 
-def tekstin_frekvenssi_aakkosissa(selväteksti, salateksti="", otsikko=None, kurvi=False, tiedostoon=False, debuggaus=False):
+def tekstin_frekvenssi_aakkosjärjestyksessä(selväteksti, salateksti="", otsikko=None, kurvi=False, tiedostoon=False, debuggaus=False):
 
     salateksti_puuttuu = len(salateksti) == 0
     aakkoset, _ = merkistot(suomi=True)
