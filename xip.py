@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-16T15:47:33+03:00
+# @Last modified time: 2022-08-17T09:36:07+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -655,7 +655,7 @@ def freq_analyze(tiedosto, debuggaus=False):
 
     # Lasketaan
     frekvenssi_kirjaimet, frekvenssi_prosentit = laske_frekvenssit(kirjainjono)
-    show_kirjainjakauma(tuple(frekvenssi_kirjaimet), frekvenssi_prosentit, nimi)
+    näytä_kirjainjakauma(tuple(frekvenssi_kirjaimet), frekvenssi_prosentit, nimi)
 
     määrät = tuota_frekvenssit(kirjainjono)
     prosentit = frekvenssi_prosenteiksi(määrät, kirjainjono)
@@ -714,7 +714,7 @@ def lue_tiedosto_merkkijonoksi(indeksi=None, debuggaus=False):
 def materiaalin_freq(viesti, otsikko="Ei annettu otsikkoa"):
     # Lasketaan frekvenssit
     frekvenssi_kirjaimet, frekvenssi_prosentit = laske_frekvenssit(viesti)
-    show_kirjainjakauma(tuple(frekvenssi_kirjaimet), frekvenssi_prosentit, otsikko)
+    näytä_kirjainjakauma(tuple(frekvenssi_kirjaimet), frekvenssi_prosentit, otsikko)
 
 
 def vertaa_selväkieli_salakieli(selväteksti, salateksti="", otsikko=None, kurvi=False, debuggaus=False):
