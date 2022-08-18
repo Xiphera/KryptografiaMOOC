@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-17T09:36:07+03:00
+# @Last modified time: 2022-08-18T16:41:08+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -26,6 +26,15 @@ from dateutil import relativedelta
 import hashlib
 
 
+def alusta_t542():
+
+    viesti = "Kahvi Charlotassa on hyvää ja vahvaa!"
+    k1 = 0x6A
+    k2 = "0xA1B2C3D4E5F60718"
+
+    return viesti, yksinkeratinen_lohkosalain, k1, k2
+
+
 def alusta_t432():
     # Varuiksi luodaan aiemmin tehdyt muuttujat
     teksti = lue_tiedosto_merkkijonoksi(4)
@@ -37,6 +46,46 @@ def alusta_t421():
     # Luo Bobin viestin Alicelle
     salakirjoitus = "PFQÄFÄFDCLCSSTGSEFJQJJLNSJCSNSTDMMEQHSHHMVXTESHSDCSSPSTDQHHSHLEPSHSHHMÅSVXTNSEPSDCQQJSVCMQDQDSSRLDDSSTDLJJSQDLTPQTXLVRFCCSQDQTLCCXÅMVJSÖQRLCXXTHFJPLTNQQHFTÖXXDCXJSMSTCSQSSPMTSPQCXPQLJCXDQTXFJLCCLENLQDQTSJQGL"
     return salakirjoitus
+
+
+# Yksinkertainen lohkosalain
+def yksinkertainen_lohkosalain(merkkijono, avain, näytälohkot=False):
+    """Yksinkertainen lohkosalain demo-funktio
+       Parametrit:
+       merkkijono (string): Lohkosalaimella enkoodattava tai dekoodattava tieto, oletus "latin-1" koodattu
+       avain (int): Symmetrinen avain, jota käytetään enkoodauksessa ja dekoodauksessa
+       näytälohkot (bool): Lippu, jolla määritetään näytetäänkö lohkosalauksen välivaiheet.
+
+       Palauttaa:
+          string: Enkoodattu tai dekoodattu merkkijono.
+    """
+    # Salaimissa on useita tarkistuksia suojattavan tiedon tyypeille sekä annettujen parametrien hyvyyksille.
+    # Nämä tarkistukset ja algoritmin sisäiset tyyppimuunnokset ovat salaimen käyttäjälle näkymättömiä.
+
+    # Seuraavassa muutetaan merkkijonon ASCII merkit tavuiksi, olettaen että merkkijono on 'latin-1' merkistö-koodattua.
+    # Tämä muunnos ei välttämättä toimi muilla merkki-koodauksilla.
+    merkkijono_tavuina = bytes(merkkijono, encoding="latin_1")
+
+    # Luodaan paikka enkoodauksen tai dekoodauksen tulokselle
+    XOR_tulos = []
+
+    # Pilkotaan merkkijono lohkoiksi. Jokainen tavu (eli merkki) muodostaa oman lohkon.
+    for tavu in merkkijono_tavuina:
+        # Suoritetaan salaimen matemaattinen operaatio (XOR) tavuittain avaimen kanssa.
+        XOR_tulos.append(avain ^ tavu)
+
+        # Jos haluat nähdä miten lohko käsitellään aseta funktiokutsuun näytälohkot=True
+        if näytälohkot:
+            print("Lohko on {}, avain {} ja XOR {}".format(
+                char(lohko), hex(avain), binary_repr(avain ^ lohko, 8)))
+
+        # Muunnetaan salaimen tulos merkkijonoksi, yleensä haluamme käsitellä vain bittejä ja tavuja.
+        # Tässä esimerkissä käsittelemme kirjain-merkkejä, joten demonstraation vuoksi muunnamme salaimen tuottaman datan merkkijonoksi.
+        XOR_merkkijonona = "".join([chr(tavu) for tavu in XOR_tulos])
+
+    print("Yksinkertainen 8-bittinen lohkosalain luotu!")
+    # Palautetaan merkkijonona.
+    return XOR_merkkijonona
 
 
 def laske_tiiviste(teksti, tekstipalaute=True, debug=False):
