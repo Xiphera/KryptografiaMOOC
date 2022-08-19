@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-19T10:14:13+03:00
+# @Last modified time: 2022-08-19T15:26:30+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -24,6 +24,25 @@ from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
 import hashlib
+
+
+def alusta_t545():
+    # Luodaan kolme viestiä
+    v1 = "Kahvi Charlotassa on hyvää ja vahvaa!"
+    v2 = "Kaivi Charlotassa on hyvää ja vahvaa!"
+    v3 = "Kqhvi Charlotassa on hyvää ja vahvaa!"
+
+    # Luodaan kaksi avainta, joiden viimeinen bitti eroaa.
+    ka = 0b01011010
+    kb = 0b01011011
+
+    # Luodaan kaksi salakirjoitusta
+    sk1 = yksinkertainen_lohkosalain(merkkijono=v1, avain=ka)
+    sk2 = yksinkertainen_lohkosalain(merkkijono=v1, avain=kb)
+    sk3 = yksinkertainen_lohkosalain(merkkijono=v2, avain=ka)
+    sk4 = yksinkertainen_lohkosalain(merkkijono=v3, avain=ka)
+
+    return v1, v2, v3, ka, kb, sk1, sk2, sk3, sk4
 
 
 def alusta_t542():
