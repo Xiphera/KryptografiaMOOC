@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-19T09:21:40+03:00
+# @Last modified time: 2022-08-19T10:14:13+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -32,7 +32,7 @@ def alusta_t542():
     k1 = 0x6A
     k2 = "0xA1B2C3D4E5F60718"
 
-    return viesti, yksinkeratinen_lohkosalain, k1, k2
+    return viesti, yksinkertainen_lohkosalain, k1, k2
 
 
 def alusta_t432():
@@ -83,7 +83,6 @@ def yksinkertainen_lohkosalain(merkkijono, avain, näytälohkot=False):
         # Tässä esimerkissä käsittelemme kirjain-merkkejä, joten demonstraation vuoksi muunnamme salaimen tuottaman datan merkkijonoksi.
         XOR_merkkijonona = "".join([chr(lohko) for lohko in XOR_tulos])
 
-    print("Yksinkertainen 8-bittinen lohkosalain luotu!")
     # Palautetaan merkkijonona.
     return XOR_merkkijonona
 
