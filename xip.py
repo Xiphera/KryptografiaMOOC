@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-21T20:11:49+03:00
+# @Last modified time: 2022-08-21T20:19:29+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -24,6 +24,21 @@ from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
 import hashlib
+
+
+def alusta_t549():
+
+    return merkit_heksamerkeiksi, yleinen_lohkosalain, päddäyksen_poisto
+
+
+def merkit_heksamerkeiksi(avain, pituus=8):
+    assert len(avain) == pituus, "merkkijonossa pitää olla kahdeksan merkkiä"
+
+    heksa_avain = "0x"
+    for byte in bytes(avain, encoding='latin-1'):
+        heksa_avain += str(hex(byte))[2:].upper()
+
+    return heksa_avain
 
 
 def alusta_t548():
