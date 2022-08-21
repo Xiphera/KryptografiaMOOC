@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-19T15:26:30+03:00
+# @Last modified time: 2022-08-21T19:31:07+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -24,6 +24,54 @@ from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
 import hashlib
+
+
+def alusta_t548():
+    pädätty_viesti, k2, yleinen_lohkosalain = alusta_t546()
+    salattu_yleisellä_lohkosalaimella = yleinen_lohkosalain(pädätty_viesti, k2)
+
+    return salattu_yleisellä_lohkosalaimella, k2, yleinen_lohkosalain, päddäyksen_poisto
+
+
+def alusta_t547():
+    viesti, _ = alusta_t546()
+    pädätty_viesti = päddäys(viesti)
+    k2 = 0xA1B2C3D4E5F60718
+    return pädätty_viesti, k2, yleinen_lohkosalain
+
+
+def alusta_t546():
+    v1 = "Kahvi Charlotassa on hyvää ja vahvaa!"
+
+    return v1, päddäys, yleinen_lohkosalain
+
+
+# Tätä funktiota käytetään kun selvätekstiin lisätään merkkejä lohkon täyttämiseksi.
+def päddäys(merkkijono, lohkon_koko=64, merkistö='latin-1'):
+    """ Päddäys-funktio, lisää merkkijonon loppuun heksoja 0x00, 0x01, ... kunnes lohkon koko bitteinä täyttyy
+    Parametrit:
+        merkkijono (string): Merkkijono johon lisätään päddäys, oletus "latin-1"-merkistökoodaus
+        lohkon_koko (int): Lohkon koko bitteinä, oletus 64-bittiä.
+
+    Palauttaa:
+        string: Merkkijono, jonka bittimäärä on jaollinen lohkon koon bittimäärällä.
+    """
+    mj_pituus_bits = len(merkkijono.encode(merkistö))*8
+    return merkkijono + "".join([chr(laskuri) for laskuri in range(int((lohkon_koko - (mj_pituus_bits) % lohkon_koko)/8))])
+
+
+# Tätä funktiota käytetään poistamaan päddäys decryptatusta merkkijonosta.
+def päddäyksen_poisto(merkkijono, pad_alku='\x00'):
+    """ Päddäyksen poisto -funktio, palauttaa merkkijonon ilman päddäystä
+    Parametrit:
+        merkkijono (string): Merkkijono johon lisätään päddäys, oletus "latin-1"-merkistökoodaus
+        pad_alku (chr): Tunniste mikä määrittää milloin päddäys alkaa.
+
+    Palauttaa:
+        string: Merkkijono, jossa ei ole enää päddäystä.
+    """
+
+    return merkkijono[:merkkijono.find(pad_alku)]
 
 
 def alusta_t545():
