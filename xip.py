@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-21T19:48:46+03:00
+# @Last modified time: 2022-08-21T20:11:49+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -27,10 +27,11 @@ import hashlib
 
 
 def alusta_t548():
+    viesti, _ = alusta_t546()
     pädätty_viesti, k2, _ = alusta_t547()
     salattu_yleisellä_lohkosalaimella = yleinen_lohkosalain(pädätty_viesti, k2)
 
-    return salattu_yleisellä_lohkosalaimella, k2, yleinen_lohkosalain, päddäyksen_poisto
+    return viesti, salattu_yleisellä_lohkosalaimella, k2, yleinen_lohkosalain, päddäyksen_poisto
 
 
 def alusta_t547():
