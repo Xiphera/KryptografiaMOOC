@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-21T19:31:07+03:00
+# @Last modified time: 2022-08-21T19:38:37+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -72,6 +72,49 @@ def päddäyksen_poisto(merkkijono, pad_alku='\x00'):
     """
 
     return merkkijono[:merkkijono.find(pad_alku)]
+
+
+# Lohkosalain olettaa että se saa tavujonon, jonka koko on jaollinen lohkon koolla.
+def yleinen_lohkosalain(tavujono, avain, lohkon_koko=64, merkistö='latin-1', näytälohkot=False):
+
+    assert (len(tavujono)*8) % lohkon_koko == 0, "Päddäys unohtunut"
+
+    # Tarvittaessa muutetaan merkkijono tavujonoksi 'latin-1' merkistökoodauksella
+    if type(tavujono) is str:
+        bytejono = tavujono.encode(merkistö)
+
+    # Jos avain on merkkijono (heksadesimaaleja), muunnetaan avain luvuksi
+    if type(avain) is str:
+        avain = int(avain, 16)
+
+    # Paikka enkoodatulle viestille
+    XOR_tulos_merkkijonona = ""
+
+    # Lohkotaan bytejono siten että jokainen tavu muodostaa oman lohkon
+
+    for lohkon_numero in range((len(bytejono)*8)//lohkon_koko):
+        # Otetaan yksi lohko ja tehdään siitä 64-bittinen luku
+        lohko = bytejono[(lohkon_numero*8):((lohkon_numero+1))*(lohkon_koko//8)]
+        # Ja tehdään lohkosta yksi 64-bittinen luku
+        lohko_int = int.from_bytes(lohko, "big")
+
+        # Lasketaan siitä XOR avaimen kanssa.
+        lohkon_xor = lohko_int ^ avain
+
+        # Muunnetaan tulos tavujonoksi
+        lohkon_xor_bytes = lohkon_xor.to_bytes(8, 'big')
+
+        # Tallenetaan XOR tulos listaan.
+        XOR_tulos_merkkijonona += "".join([chr(tavu) for tavu in lohkon_xor_bytes])
+
+        if näytälohkot:
+            print("Lohkon numero   :", lohkon_numero)
+            print("Lohkon sisältö  :", lohko)
+            print("Lohkon xor      :", lohkon_xor)
+            print("Lohkon xor Bytes:", lohkon_xor_bytes)
+            print("Merkkijono nyt  :", XOR_tulos_merkkijonona)
+
+    return XOR_tulos_merkkijonona
 
 
 def alusta_t545():
