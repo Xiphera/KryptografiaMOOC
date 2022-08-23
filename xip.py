@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T10:38:50+03:00
+# @Last modified time: 2022-08-23T13:40:41+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -26,6 +26,87 @@ from dateutil import relativedelta
 import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
+
+
+alusta_t603():
+
+    lohko_bitteinä = 128
+    lohko_tavuina = lohko_bitteinä//8
+
+    avain, _, _, _, _, _ = alusta_t601()
+
+    tiedosto = './Tekstit/kakkuresepti.txt'
+    lohkot_tavuina = lue_tiedosto_ja_esikäsittele(tiedosto, lohko_bitteinä, näytä_tiedosto=False)
+
+
+# Funktio suorittaa tavutiedolle joko salauksen tai purun annetulla avaimella.
+# Jos purku=False, niin funktio enkoodaa.
+# Jos purku=True, niin funktio dekoodaa.
+def salaa_ja_pura(tavutieto, avain, purku=False):
+    # Luodaan AES-ECB lohkosalain käyttäen 128-bittistä avainta.
+    aes_ecb_salain = Cipher(algorithms.AES(avain), modes.ECB())
+
+    # luodaan joko enkryptaus tai dekryptaus
+    if purku:
+        operaatio = aes_ecb_salain.decryptor()
+    else:
+        operaatio = aes_ecb_salain.encryptor()
+
+    # Katsotaan kuinka monta lohkoa pitää prosessoida.
+    lohkoja = len(tavutieto)
+
+    # Tehdään tila käsitellylle datalle.
+    käsitellyt = []
+
+    for i, lohko in enumerate(tavutieto):
+        if i != lohkoja:
+            käsitellyt.append(operaatio.update(lohko))
+        else:
+            käsitellyt.append(operaatio.update(lohko)+operaatio.finalize())
+
+    return käsitellyt
+
+
+# Funktio palauttaa tavu-muodosa luetun tiedoston.
+def lue_binääri_tiedosto(tiedostonnimi):
+    with open(tiedostonnimi, 'rb') as file:
+        sisältö_tavuina = file.read()
+
+    return sisältö_tavuina
+
+
+# Funktio lukee tiedoston, jakaa sen lohkoiksi
+# Ja päddää viimeiseen lohkon sisältämään 128-bittiä.
+# Jos näytä_tiedosto parametri on True, näytetään tiedoston sisältö
+# Oletus nyt on että lohkon koko on 128-bittiä
+def lue_tiedosto_ja_esikäsittele(tiedostonnimi, lohkon_koko=128, näytä_tiedosto=False):
+
+    # Jos haluamme näyttää tekstitiedoston sisällön
+    if näytä_tiedosto:
+        with open(tiedostonnimi, 'r', encoding='UTF-8') as file:
+            tekstiä = file.readlines()
+
+        print("".join(tekstiä))
+
+    # Luetaan tavuina tiedosto sisään
+    tavu_data = lue_binääri_tiedosto(tiedostonnimi)
+
+    # Määritellään lohkon koko tavuina
+    lohko_tavuina = lohkon_koko//8
+
+    # Tehdään paikka lohkoille
+    lohkot = []
+
+    # Suoritetaan lohkominen
+    for i in range(0, len(tavu_data), lohko_tavuina):
+        lohkot.append(tavu_data[i:i+lohko_tavuina])
+
+    # Suoritetaan päddäys viimeiselle lohkolle
+    päddää = padding.PKCS7(lohkon_koko).padder()
+    lohkot[-1] = päddää.update(lohkot[-1])+päddää.finalize()
+
+    # Palautetaan tavumuodossa olevat lohkot, joista viimeinen on lavennettu 128-bittiseksi
+    return lohkot
 
 
 def alusta_t601(viesti="KAHVI"):
@@ -59,7 +140,16 @@ def alusta_t601(viesti="KAHVI"):
 
     purettu_salakieli = dekryptaus.update(kahvi_salakielellä)+dekryptaus.finalize()
 
-    return avain, pädätty_viesti, enkryptaus, kahvi_salakielellä, dekryptaus, purettu_salakieli
+    # Luodaan AES-ECB lohkosalain käyttäen 128-bittistä avainta.
+    AE = Cipher(algorithms.AES(avain), modes.ECB())
+
+    # Luodaan enkryptaus, eli salaava toiminne
+    e = AE.encryptor()
+
+    # Luodaan enkryptaus, eli salaava toiminne
+    d = AE.decryptor()
+
+    return avain, pädätty_viesti, e, kahvi_salakielellä, d, purettu_salakieli
 
 
 def alusta_t549():
