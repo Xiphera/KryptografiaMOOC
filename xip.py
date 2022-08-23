@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T14:20:10+03:00
+# @Last modified time: 2022-08-23T14:25:22+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -26,6 +26,27 @@ from dateutil import relativedelta
 import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
+
+
+def alusta_t605():
+
+    avain, salatut_lohkot, _ = alusta_t604()
+    puretur_lohkot = salaa_ja_pura(salatut_lohkot, avain, purku=True)
+
+    return puretut_lohkot, yhdistele
+
+
+def yhdistele(lohkot, merkistö=None):
+
+    tavut = bytes()
+    for lohko in lohkot:
+        tavut += lohko
+
+    # Jos on pyydetty merkkikoodauksen purkua, palautetaan dekoodattu tavukoodi.
+    if merkistö is None:
+        return tavut
+    else:
+        return tavut.decode(merkistö)
 
 
 def alusta_t604(viesti="KAHVI"):
