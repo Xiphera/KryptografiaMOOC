@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-21T20:19:29+03:00
+# @Last modified time: 2022-08-23T10:38:50+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -24,6 +24,42 @@ from datetime import date
 from datetime import datetime
 from dateutil import relativedelta
 import hashlib
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives import padding
+
+
+def alusta_t601(viesti="KAHVI"):
+
+    # Asetetaan päddäykselle koko, joka vastaa AES lohkon kokoa eli 128-bittiä.
+    lohko_bitteinä = 128
+    lohko_tavuina = lohko_bitteinä//8
+
+    # Luodaan päddäyksen tuottaja sekä päddäyksen poistaja
+    täydennä_päddäys = padding.PKCS7(lohko_bitteinä).padder()
+    poista_päddäys = padding.PKCS7(lohko_bitteinä).unpadder()
+
+    luku_2048_bittiä = b"S\xef8\x8e\xc8\xddff\xf4\x81\xc7 '2\x97\x88\x86\t3\x12\xfbTI5FQ\x05$P\xe85o\\a\xae\x80i=U\x16\t3\xc0i\xbd\xee\xcd\xc0\\\xf6\x13\x0f\xe8jK\x0e\xd9\xf8\xab\xbc\r!0d?\nv\xad\x06\x83\x01,\x83\xf9%\xa8n4\x12\xb3gU\x12\xda\xecw!\xf2O\xb5\r\x1e\xdd\xf0\xa2H5\xe9\xf2\x81\xd4B\x91\xf7r\xfaI!d\xf7\xfa\xafW\xce\xb2\x00x]\xb2[\xf5@:\x07\x9d\x9db\xca\xa8?Ue3G\xe1YVh\x80\x051g\x00\x07hQ\xc4\xf3K\x1b\x0f\\\x08\xfe\x19&6\xb2\x14\xcb\x90\xfd\xfdq+\xd6X\xa5\xc6Q\x84`U\x13\xee#Y\xb2\xdf8\x7fJ8l\x8bV\x89>\xe9\xc7\x83/\xdf\xf7(\x8b\xc0\xb3\xf8\xe11\x04\xcb\x99\x96[\xbdN\x8d\x8d-\xaa\x03\x90*m\xc3\xa1\x08\x91\x17\xd96^9#iX\xfc\xef \xdd\xd1\xcd\xff\xedY\x98\xbaA\xf2g\xbf\xb7q\xb4^\xa5\xc8\xd4\xcb\xd9\x0eZb\xf8"
+
+    avain = luku_2048_bittiä[:16]
+
+    viesti_tavuina = bytes(viesti, 'UTF-8')
+
+    pädätty_viesti = täydennä_päddäys.update(viesti_tavuina)+täydennä_päddäys.finalize()
+
+    # Luodaan AES-ECB lohkosalain käyttäen 128-bittistä avainta.
+    aes_ecb_salain = Cipher(algorithms.AES(avain), modes.ECB())
+
+    # Luodaan enkryptaus, eli salaava toiminne
+    enkryptaus = aes_ecb_salain.encryptor()
+
+    # Luodaan enkryptaus, eli salaava toiminne
+    dekryptaus = aes_ecb_salain.decryptor()
+
+    kahvi_salakielellä = enkryptaus.update(pädätty_viesti) + enkryptaus.finalize()
+
+    purettu_salakieli = dekryptaus.update(kahvi_salakielellä)+dekryptaus.finalize()
+
+    return avain, pädätty_viesti, enkryptaus, kahvi_salakielellä, dekryptaus, purettu_salakieli
 
 
 def alusta_t549():
