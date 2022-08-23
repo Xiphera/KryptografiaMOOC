@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T13:50:39+03:00
+# @Last modified time: 2022-08-23T14:20:10+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -26,6 +26,14 @@ from dateutil import relativedelta
 import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
+
+
+def alusta_t604(viesti="KAHVI"):
+
+    avain, lohkot_tavuina, _ = alusta_t603()
+    salatut_lohkot = salaa_ja_pura(lohkot_tavuina, avain)
+
+    return avain, salatut_lohkot, salaa_ja_pura
 
 
 def alusta_t603(viesti="KAHVI"):
