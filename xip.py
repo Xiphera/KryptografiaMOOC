@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T13:47:03+03:00
+# @Last modified time: 2022-08-23T13:50:39+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -41,9 +41,15 @@ def alusta_t603(viesti="KAHVI"):
     return avain, lohkot_tavuina, salaa_ja_pura
 
 
+def alusta_t602(viesti="KAHVI"):
+    return lue_tiedosto_ja_esikäsittele
+
+
 # Funktio suorittaa tavutiedolle joko salauksen tai purun annetulla avaimella.
 # Jos purku=False, niin funktio enkoodaa.
 # Jos purku=True, niin funktio dekoodaa.
+
+
 def salaa_ja_pura(tavutieto, avain, purku=False):
     # Luodaan AES-ECB lohkosalain käyttäen 128-bittistä avainta.
     aes_ecb_salain = Cipher(algorithms.AES(avain), modes.ECB())
