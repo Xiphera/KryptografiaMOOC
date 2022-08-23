@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T13:44:52+03:00
+# @Last modified time: 2022-08-23T13:47:03+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -37,6 +37,8 @@ def alusta_t603(viesti="KAHVI"):
 
     tiedosto = './Tekstit/kakkuresepti.txt'
     lohkot_tavuina = lue_tiedosto_ja_esikäsittele(tiedosto, lohko_bitteinä, näytä_tiedosto=False)
+
+    return avain, lohkot_tavuina, salaa_ja_pura
 
 
 # Funktio suorittaa tavutiedolle joko salauksen tai purun annetulla avaimella.
