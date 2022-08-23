@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T13:40:41+03:00
+# @Last modified time: 2022-08-23T13:44:52+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -28,12 +28,12 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 
 
-alusta_t603():
+def alusta_t603(viesti="KAHVI"):
 
     lohko_bitteinä = 128
     lohko_tavuina = lohko_bitteinä//8
 
-    avain, _, _, _, _, _ = alusta_t601()
+    avain, _, _, _, _, _ = alusta_t601(viesti)
 
     tiedosto = './Tekstit/kakkuresepti.txt'
     lohkot_tavuina = lue_tiedosto_ja_esikäsittele(tiedosto, lohko_bitteinä, näytä_tiedosto=False)
