@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T17:06:44+03:00
+# @Last modified time: 2022-08-24T18:51:39+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -28,6 +28,36 @@ import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from PIL import Image
+
+
+def alusta_t630():
+
+    suuri_luku = b"S\xef8\x8e\xc8\xddff\xf4\x81\xc7 '2\x97\x88\x86\t3\x12\xfbTI5FQ\x05$P\xe85o\\a\xae\x80i=U\x16\t3\xc0i\xbd\xee\xcd\xc0\\\xf6\x13\x0f\xe8jK\x0e\xd9\xf8\xab\xbc\r!0d?\nv\xad\x06\x83\x01,\x83\xf9%\xa8n4\x12\xb3gU\x12\xda\xecw!\xf2O\xb5\r\x1e\xdd\xf0\xa2H5\xe9\xf2\x81\xd4B\x91\xf7r\xfaI!d\xf7\xfa\xafW\xce\xb2\x00x]\xb2[\xf5@:\x07\x9d\x9db\xca\xa8?Ue3G\xe1YVh\x80\x051g\x00\x07hQ\xc4\xf3K\x1b\x0f\\\x08\xfe\x19&6\xb2\x14\xcb\x90\xfd\xfdq+\xd6X\xa5\xc6Q\x84`U\x13\xee#Y\xb2\xdf8\x7fJ8l\x8bV\x89>\xe9\xc7\x83/\xdf\xf7(\x8b\xc0\xb3\xf8\xe11\x04\xcb\x99\x96[\xbdN\x8d\x8d-\xaa\x03\x90*m\xc3\xa1\x08\x91\x17\xd96^9#iX\xfc\xef \xdd\xd1\xcd\xff\xedY\x98\xbaA\xf2g\xbf\xb7q\xb4^\xa5\xc8\xd4\xcb\xd9\x0eZb\xf8"
+
+    avain = suuri_luku[:16]
+
+    return avain, ctr_enkoodaus, ctr_dekoodaus
+
+
+def ctr_enkoodaus(avain, viesti):
+    # Arvotaan kertakäyttönumero satunnaisuudesta
+    # Eli alustetaan N satunnaisella 128-bittisellä luvulla
+    N = os.urandom(16)
+
+    # Tehdään enkoodaaja avaimesta ja laskurista
+    enkryptaaja = Cipher(algorithms.AES(avain), modes.CTR(N),).encryptor()
+
+    # Suoritetaan salaus
+    salattu = enkryptaaja.update(viesti) + enkryptaaja.finalize()
+
+    return (N, salattu)
+
+
+def ctr_dekoodaus(avain, N, salateksti):
+    # Tehdään dekoodaaja, avaimesta ja laskurista
+    dekoodaaja = Cipher(algorithms.AES(avain), modes.CTR(N),).decryptor()
+
+    return dekoodaaja.update(salateksti) + dekoodaaja.finalize()
 
 
 def alusta_t620():
