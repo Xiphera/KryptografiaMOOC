@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T09:50:45+03:00
+# @Last modified time: 2022-08-24T12:37:55+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -28,6 +28,39 @@ import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
 from PIL import Image
+
+
+def alust_t620():
+    avain, _, _, _, _, _ = alusta_t601()
+    return avain, lue_kuva, salaa_ja_pura_cbc, yhdistele
+
+
+# Lisätty lohkon_koko ja lohko_tavuina funktion kutsuun oletusarvoina.
+def salaa_ja_pura_cbc(tavutieto, avain, IV=None, lohkon_koko=128, lohko_tavuina=16, purku=False):
+
+    # Salatessa funktiolle ei anneta IV:tä eli ensimmäistä kertakäyttönumeroa.
+    # Luodaan ensimmäinen kertakäyttönumero tietokoneen entropia-altaasta, joka on siis täysin satunnainen 16-tavuinen, eli 128-bittinen luku
+    if IV is None:
+        IV = os.urandom(lohko_tavuina)
+
+    # Luodaan AES-CBC lohkosalain käyttäen 128-bittistä avainta.
+    aes_ecb_salain = Cipher(algorithms.AES(avain), modes.CBC(IV))
+
+    if purku:
+        operaatio = aes_ecb_salain.decryptor()
+    else:
+        operaatio = aes_ecb_salain.encryptor()
+
+    lohkoja = len(tavutieto)
+    käsitellyt = []
+    for i, lohko in enumerate(tavutieto):
+        if i != lohkoja:
+            käsitellyt.append(operaatio.update(lohko))
+        else:
+            käsitellyt.append(operaatio.update(lohko)+operaatio.finalize())
+
+    # Palautetaan sekä alkuarvo IV että käsitellyt data-lohkot
+    return IV, käsitellyt
 
 
 def alusta_t606():
