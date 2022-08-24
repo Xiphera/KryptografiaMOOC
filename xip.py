@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T12:43:48+03:00
+# @Last modified time: 2022-08-24T12:50:49+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -32,7 +32,8 @@ from PIL import Image
 
 def alusta_t620():
     avain, _, _, _, _, _ = alusta_t601()
-    return avain, lue_kuva, salaa_ja_pura_cbc, yhdistele
+    kuvatiedosto = './images/cake.png'
+    return avain, kuvatiedosto, lue_kuva, salaa_ja_pura_cbc, yhdistele
 
 
 # Lisätty lohkon_koko ja lohko_tavuina funktion kutsuun oletusarvoina.
@@ -65,8 +66,8 @@ def salaa_ja_pura_cbc(tavutieto, avain, IV=None, lohkon_koko=128, lohko_tavuina=
 
 def alusta_t606():
     avain, _, _, _, _, _ = alusta_t601()
-    kuvatiedosto = './images/cake.png'
-    return avain, kuvatiedosto, lue_kuva, salaa_ja_pura, yhdistele
+
+    return avain, lue_kuva, salaa_ja_pura, yhdistele
 
 
 def lue_kuva(tiedosto, lohkon_koko=128, lohko_tavuina=16):
