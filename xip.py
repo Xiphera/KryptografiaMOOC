@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T12:50:49+03:00
+# @Last modified time: 2022-08-24T13:39:13+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -60,8 +60,10 @@ def salaa_ja_pura_cbc(tavutieto, avain, IV=None, lohkon_koko=128, lohko_tavuina=
         else:
             käsitellyt.append(operaatio.update(lohko)+operaatio.finalize())
 
-    # Palautetaan sekä alkuarvo IV että käsitellyt data-lohkot
-    return IV, käsitellyt
+      if purku=False:
+          return IV, käsitellyt
+      else:
+          return käsitellyt
 
 
 def alusta_t606():
@@ -615,7 +617,7 @@ def heittelyt(noppa=None, kolikko=None, n=4000000, siemen=20211221, n_bins=3):
         label = "Kolikon"
     else:
         max_luku = 6
-        #x_paikat = np.arange(0, max_luku)
+        # x_paikat = np.arange(0, max_luku)
         x_paikat = np.array([0.22, 1.15, 2.05, 2.98, 3.85, 4.8])
         x_labelit = ['1', '2', '3', '4', '5', '6']
         n_bins = 11
@@ -1050,7 +1052,7 @@ def freq_analyze(tiedosto, debuggaus=False):
     if aakkoston_koko - len(kirjainjonon_merkit) != 0:
         print("Kirjainjonon puuttuvat kirjaimet ovat {}".format(
             ''.join(set(isot).difference(kirjainjonon_merkit))))
-    #print("Kirjainjono näyttää tältä:" +kirjainjono)
+    # print("Kirjainjono näyttää tältä:" +kirjainjono)
 
     # Lasketaan
     frekvenssi_kirjaimet, frekvenssi_prosentit = laske_frekvenssit(kirjainjono)
