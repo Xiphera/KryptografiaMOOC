@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T09:20:28+03:00
+# @Last modified time: 2022-08-24T09:50:45+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -31,7 +31,8 @@ from PIL import Image
 
 
 def alusta_t606():
-    return lue_kuva, salaa_ja_pura, yhdistele
+    avain, _, _, _, _, _ = alusta_t601()
+    return avain, lue_kuva, salaa_ja_pura, yhdistele
 
 
 def lue_kuva(tiedosto, lohkon_koko=128, lohko_tavuina=16):
