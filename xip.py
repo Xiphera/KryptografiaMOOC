@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-23T14:25:22+03:00
+# @Last modified time: 2022-08-24T09:20:28+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -17,6 +17,7 @@ from random import choices
 import numpy as np
 from numpy import binary_repr
 import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
 import pprint
 from scipy.interpolate import interp1d
 import warnings
@@ -26,12 +27,37 @@ from dateutil import relativedelta
 import hashlib
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives import padding
+from PIL import Image
+
+
+def alusta_t606():
+    return lue_kuva, salaa_ja_pura, yhdistele
+
+
+def lue_kuva(tiedosto, lohkon_koko=128, lohko_tavuina=16):
+    kuva = np.asarray(Image.open(tiedosto))
+
+    # Otetaan talteen kuvan alkuperäinen muoto
+    muodot = kuva.shape
+
+    # Litistetään kuva riviksi
+    rivi_kuva = kuva.flatten()
+
+    # Muunnetaan pikselit tavuiksi
+    kuva_tavuina = rivi_kuva.tobytes()
+
+    # Suoritetaan lohkominen
+    kuva_lohkot = []
+    for i in range(0, len(kuva_tavuina), lohko_tavuina):
+        kuva_lohkot.append(kuva_tavuina[i:i+lohko_tavuina])
+
+    return muodot, kuva_lohkot
 
 
 def alusta_t605():
 
     avain, salatut_lohkot, _ = alusta_t604()
-    puretur_lohkot = salaa_ja_pura(salatut_lohkot, avain, purku=True)
+    puretut_lohkot = salaa_ja_pura(salatut_lohkot, avain, purku=True)
 
     return puretut_lohkot, yhdistele
 
