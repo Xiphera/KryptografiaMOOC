@@ -2,7 +2,7 @@
 # @Date:   2022-08-12T13:27:02+03:00
 # @Email:  petri.jehkonen@xiphera.com
 # @Last modified by:   petri
-# @Last modified time: 2022-08-24T13:39:13+03:00
+# @Last modified time: 2022-08-24T17:06:44+03:00
 # @Copyright: Xiphera LTD.
 
 
@@ -60,10 +60,10 @@ def salaa_ja_pura_cbc(tavutieto, avain, IV=None, lohkon_koko=128, lohko_tavuina=
         else:
             käsitellyt.append(operaatio.update(lohko)+operaatio.finalize())
 
-      if purku=False:
-          return IV, käsitellyt
-      else:
-          return käsitellyt
+    if not purku:
+        return IV, käsitellyt
+    else:
+        return käsitellyt
 
 
 def alusta_t606():
